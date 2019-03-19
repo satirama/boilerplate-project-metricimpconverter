@@ -23,8 +23,20 @@ module.exports = function (app) {
       var returnNum = convertHandler.convert(initNum, initUnit);
       var returnUnit = convertHandler.getReturnUnit(initUnit);
       var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
-      
-      //res.json
+    
+     //console.log('rq', initNum,isNaN(initNum), initUnit ? true : false, initUnit);
+    
+      if (isNaN(initNum) && !initUnit) {
+        res.json('invalid number and unit');
+      } else if (isNaN(initNum) && initUnit) {
+        res.json('invalid number');
+      } else if (!isNaN(initNum) && !initUnit) {
+        res.json('invalid unit');
+      } else {
+        res.json({initNum: initNum, initUnit: initUnit, returnNum: returnNum, returnUnit: returnUnit, string: toString});
+      }
+      //res.json({initNum: initNum, initUnit: initUnit, returnNum: returnNum, returnUnit: returnUnit, string: toString});
+
     });
     
 };
